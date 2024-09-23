@@ -1,0 +1,61 @@
+body {
+    display: grid;
+    background-image: url('imag.jpg');
+    place-items: center;
+    background-color: rgb(202, 145, 255);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+#box {
+    height: max-content;
+    width: 300px;
+    padding: 50px;
+    padding-left: 90px;
+    background-color: antiquewhite;
+    border-radius: 5px;
+    box-shadow: 0px 0px 5px -2px #000000;
+    font-size: x-large;
+}
+
+#aaa,
+#bbb {
+    background-color: #00000000;
+    border-left: none;
+    border-top: none;
+    border-right: none;
+    width: 250px;
+    outline: none;
+}
+
+#aaa:focus,
+#bbb:focus {
+    border-color: rgb(177, 94, 255);
+}
+
+label {
+    color: #572e6a;
+}
+
+button {
+    border: none;
+    outline: none;
+    background-color: #d687fb;
+    color: rgb(255, 255, 255);
+    height: 35px;
+    width: 280px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 5px -2px #000000;
+}
+
+#box2 {
+    height: max-content;
+    width: max-content;
+    padding: 0px;
+    background-color: rgb(255, 255, 255);
+    border-radius: 5px;
+    box-shadow: 0px 0px 5px -2px #ffffff;
+    border-color: rgb(156, 255, 132);
+}
