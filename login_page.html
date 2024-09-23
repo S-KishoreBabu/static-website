@@ -1,0 +1,84 @@
+<html>
+<head>
+    <title>Login page</title>
+    <style>
+        body{
+            display: grid;
+            place-items: center;
+            background-color: rgb(202, 145, 255);
+
+        }
+        .sa{
+            background-color: rgb(255, 255, 255);
+            height: max-content;
+            width: max-content;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 8px 0 #000000;
+        }
+        #bt{
+            position:relative;
+            transition-duration: 500ms;
+            border: none;
+            background-color: rgb(100, 183, 255);
+            color: aliceblue;
+            border-radius: 5px;
+            height: 35px;
+            width: 80px;
+            font-size: large;
+            box-shadow: 2px 2px 3px 0 #000000;
+            cursor: pointer;
+        }
+        #ps{
+            height: 30px;
+            width: 200px;
+            border-radius: 4px;
+            outline: none;
+            border: none;
+            background-color: rgb(127, 170, 255);
+            color:aliceblue;
+            font-size: larger;
+        }
+        #co{
+            color: blue;
+            font-size: 30px;
+            font-family:cursive;
+        }
+    </style>
+</head>
+<body>
+    <h2>LOGIN PAGE</h2>
+    <div class="sa">
+        <label id="co">password :</label>
+        <br><br>
+        <input type="text" id="ps">
+        <br><br><br>
+        <button id="bt" onclick="check()" onpointerover="move_button()">register</button>
+        <br><br>
+        <a href="password_setup.html">Set password</a>
+    </div>
+    <script>
+        let i=0;
+        let a=0;
+        function check(){
+            var a=document.getElementById("ps").value;
+            window.open("https://github.com/S-KishoreBabu") //attach your website
+        }
+        function move_button(){  
+            var a=document.getElementById("ps").value;
+            var b=localStorage.getItem("ps1");
+            if(a!=b){
+            i += 1;
+            a=120;
+            b=10;
+            if((i%2)==0){
+                bt.style.left = 10+"px";
+            }
+            else{
+                bt.style.left = 120+"px"; 
+            }
+            }      
+        }
+    </script>  
+</body>
+</html>
