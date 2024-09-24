@@ -1,6 +1,6 @@
 body {
     display: grid;
-    background-image: url('images/imag.jpg');
+    background-image: url('../images/imag.jpg');
     place-items: center;
     background-color: rgb(202, 145, 255);
     background-repeat: no-repeat;
