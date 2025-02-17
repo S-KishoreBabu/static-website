@@ -5,7 +5,7 @@ function doo() {
     const Array1 = a.split('');
     const Array2 = b.split('');
     var n = 50
-    var k = 0;
+    var k = 0;N
     for (z = 0; z < n; z++) {
         console.log(z + 1);
         console.log(Array1);
