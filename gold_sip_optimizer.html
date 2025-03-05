@@ -1,44 +1,114 @@
-<html>
-  <head>
-    <title>gold SIP Optimizer</title>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="js/gold_script.js"></script>
-    <link href="css/gold_style.css" rel="stylesheet" />
-    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
-    
-
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    
-    <link
-      href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-      rel="stylesheet"/>
-  </head>
-  <body class="bg-gray-100">
-
-    <div class="h-155 flex bg-[url(''../images/imag.jpg'')] bg-cover bg-center overflow-hidden">
-      <!-- Left Box (Text Section) -->
-      <div class="w-2/3 flex items-center p-8 bg-[#ff000000]">
-        <div>
-
-            <h1 class="text-5xl font-bold text-gray-800">Welcome to Our Website</h1>
-            <p class="mt-10 text-gray-600">
-            Discover amazing content, services, and more. We are dedicated to
-            providing the best experience for our users.
-            </p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fund Performance</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 flex justify-center items-center min-h-screen">
+    <div class="bg-white p-6 rounded-xl shadow-lg w-full max-w-md text-center">
+        <h1 class="text-2xl font-bold text-gray-800">Fund Performance</h1>
+        
+        <!-- NAV & Fund Size -->
+        <div class="mt-4">
+            <p class="text-lg font-semibold">Current NAV: <span id="currentNav" class="text-green-600">Loading...</span></p>
+            <p class="text-lg font-semibold">Fund Size: <span class="text-blue-600">₹2,500 Cr</span></p>
         </div>
-      </div>
-
-      <!-- Right Box (Image Section) -->
-      <div class="w-1/3">
-        <img
-          src="https://via.placeholder.com/300"
-          alt="Website Image"
-          class="w-full h-full object-cover"
-        />
-      </div>
+        
+        <!-- Timeframe Selection -->
+        <div class="mt-4">
+            <select id="timeframe" class="p-2 border rounded-lg">
+                <option value="day">Day</option>
+                <option value="week">Week</option>
+                <option value="month">Month</option>
+                <option value="year">Year</option>
+            </select>
+        </div>
+        
+        <!-- Graph -->
+        <canvas id="navChart" class="mt-4"></canvas>
+        
+        <!-- Investment Button -->
+        <button class="mt-6 bg-blue-500 text-white px-6 py-2 rounded-lg text-lg font-semibold hover:bg-blue-600">Invest Now</button>
     </div>
-  </body>
+
+    <script>
+        const ctx = document.getElementById('navChart').getContext('2d');
+        let chart;
+        let navData = [];
+        let labels = [];
+
+        async function loadCSV() {
+            const response = await fetch('Report_Latest_NAV.csv'); // Ensure this file is accessible on your server
+            const data = await response.text();
+            const rows = data.split('\n').slice(1); // Remove header row
+            
+            navData = [];
+            labels = [];
+            
+            rows.forEach(row => {
+                const cols = row.split(',');
+                labels.push(cols[0]); // Date column
+                navData.push(parseFloat(cols[1])); // NAV column
+            });
+            
+            document.getElementById('currentNav').textContent = `₹${navData[navData.length - 1]}`;
+            createChart('day');
+        }
+
+        function createChart(timeframe) {
+            if (chart) chart.destroy();
+            let displayData, displayLabels;
+
+            switch (timeframe) {
+                case 'day':
+                    displayData = navData.slice(-7);
+                    displayLabels = labels.slice(-7);
+                    break;
+                case 'week':
+                    displayData = navData.slice(-30);
+                    displayLabels = labels.slice(-30);
+                    break;
+                case 'month':
+                    displayData = navData.slice(-90);
+                    displayLabels = labels.slice(-90);
+                    break;
+                case 'year':
+                    displayData = navData;
+                    displayLabels = labels;
+                    break;
+            }
+
+            chart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: displayLabels,
+                    datasets: [{
+                        label: 'NAV (₹)',
+                        data: displayData,
+                        borderColor: 'rgb(75, 192, 192)',
+                        borderWidth: 2,
+                        fill: false,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: false
+                        }
+                    }
+                }
+            });
+        }
+
+        document.getElementById('timeframe').addEventListener('change', function() {
+            createChart(this.value);
+        });
+
+        loadCSV();
+    </script>
+</body>
 </html>
